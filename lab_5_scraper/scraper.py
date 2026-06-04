@@ -250,19 +250,19 @@ class Crawler:
         for seed_url in self.config.get_seed_urls():
             if len(self.urls) >= self.config.get_num_articles():
                 break
-
-        response = make_request(seed_url, self.config)
-        if response and response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'html.parser')
-
-            for link in soup.find_all('a'):
-                url = link.get('href')
-                if url:
-                    full_url = urljoin(seed_url, url)
-                    if full_url not in self.urls and full_url != seed_url:
-                        self.urls.append(full_url)
-                    if len(self.urls) >= self.config.get_num_articles():
-                        break
+            
+            response = make_request(seed_url, self.config)
+            if response and response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+            
+                for link in soup.find_all('a', class_='button'):
+                    if 'Подробнее' in link.get_text():
+                        url = link.get('href')
+                        if url and url not in self.urls:
+                            self.urls.append(url)
+                        
+                        if len(self.urls) >= self.config.get_num_articles():
+                            break
 
     def get_search_urls(self) -> list:
         """
@@ -315,6 +315,10 @@ class HTMLParser:
             article_id (int): Article id
             config (Config): Configuration
         """
+        self.full_url = full_url
+        self.article_id = article_id
+        self.config = config
+        self.article = Article(full_url, article_id)
 
     def _fill_article_with_text(self, article_soup: BeautifulSoup) -> None:
         """
@@ -323,6 +327,10 @@ class HTMLParser:
         Args:
             article_soup (bs4.BeautifulSoup): BeautifulSoup instance
         """
+        content = article_soup.find('div', class_='entry-content')
+        if not content:
+            content = article_soup
+
 
     def _fill_article_with_meta_information(self, article_soup: BeautifulSoup) -> None:
         """

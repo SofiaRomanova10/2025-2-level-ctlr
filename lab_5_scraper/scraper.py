@@ -254,7 +254,6 @@ class CrawlerRecursive(Crawler):
 
     def find_articles(self) -> None:
         """Use regular search for the current mark 8 implementation."""
-        super().find_articles()
 
 
 class HTMLParser:

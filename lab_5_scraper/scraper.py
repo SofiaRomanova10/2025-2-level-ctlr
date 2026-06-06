@@ -252,7 +252,7 @@ class CrawlerRecursive(Crawler):
         super().__init__(config)
         self.start_url = config.get_seed_urls()[0]
 
-    def find_articles(self) -> None:
+#    def find_articles(self) -> None:
         """Use regular search for the current mark 8 implementation."""
 
 

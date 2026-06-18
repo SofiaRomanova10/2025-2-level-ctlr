@@ -4,6 +4,7 @@ Final project implementation.
 
 import sys
 from pathlib import Path
+
 from lab_6_pipeline.pipeline import UDPipeAnalyzer
 
 

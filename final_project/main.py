@@ -2,9 +2,10 @@
 Final project implementation.
 """
 
-from lab_6_pipeline.pipeline import UDPipeAnalyzer
 import sys
 from pathlib import Path
+from lab_6_pipeline.pipeline import UDPipeAnalyzer
+
 
 project_root = Path(__file__).resolve().parent.parent
 current_working_dir = Path.cwd().resolve()

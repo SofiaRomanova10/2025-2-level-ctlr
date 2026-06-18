@@ -2,6 +2,7 @@
 Final project implementation.
 """
 
+from lab_6_pipeline.pipeline import UDPipeAnalyzer
 import sys
 from pathlib import Path
 
@@ -11,8 +12,6 @@ for import_root in (project_root, current_working_dir):
     import_root_str = str(import_root)
     if import_root_str not in sys.path:
         sys.path.insert(0, import_root_str)
-
-from lab_6_pipeline.pipeline import UDPipeAnalyzer
 
 OUTPUT_FILENAME = "auto_annotated.conllu"
 

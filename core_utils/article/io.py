@@ -22,7 +22,7 @@ def to_raw(article: Article) -> None:
         article (Article): Article instance
     """
     with open(article.get_raw_text_path(), "w", encoding="utf-8") as file:
-        file.write(article.text + "\n")
+        file.write(article.text)
 
 
 def from_raw(path: pathlib.Path | str, article: Article | None = None) -> Article:

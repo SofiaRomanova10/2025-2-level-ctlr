@@ -86,7 +86,7 @@ def _analyze_corpus(corpus_text: str) -> str:
     if not result:
         raise ValueError("UDPipeAnalyzer returned an empty result")
 
-    return result.rstrip("\n") + "\n"
+    return result.rstrip("\n") + "\n\n"
 
 
 def main(corpus_path: Path, dist_path: Path) -> None:

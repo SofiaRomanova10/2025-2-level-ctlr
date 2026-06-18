@@ -2,9 +2,17 @@
 Final project implementation.
 """
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
+project_root = Path(__file__).resolve().parent.parent
+current_working_dir = Path.cwd().resolve()
+for import_root in (project_root, current_working_dir):
+    import_root_str = str(import_root)
+    if import_root_str not in sys.path:
+        sys.path.insert(0, import_root_str)
+
+from lab_6_pipeline.pipeline import UDPipeAnalyzer
 
 OUTPUT_FILENAME = "auto_annotated.conllu"
 
@@ -72,22 +80,6 @@ def _analyze_corpus(corpus_text: str) -> str:
     Raises:
         ValueError: If analyzer returns no non-empty annotation.
     """
-    # Imported lazily so validation tests for missing/empty folders do not depend
-    # on heavy external linguistic libraries until annotation is actually needed.
-    #
-    # When this file is launched directly as ``python final_project/main.py``,
-    # Python puts ``final_project`` itself into sys.path, but not the repository
-    # root. Because ``lab_6_pipeline`` is a sibling package of ``final_project``,
-    # we add the root explicitly before importing the analyzer.
-    project_root = Path(__file__).resolve().parent.parent
-    current_working_dir = Path.cwd().resolve()
-    for import_root in (project_root, current_working_dir):
-        import_root_str = str(import_root)
-        if import_root_str not in sys.path:
-            sys.path.insert(0, import_root_str)
-
-    from lab_6_pipeline.pipeline import UDPipeAnalyzer
-
     analyzer = UDPipeAnalyzer()
     analyzed_texts = analyzer.analyze([corpus_text])
     result = "\n\n".join(text.strip() for text in analyzed_texts if text.strip())
